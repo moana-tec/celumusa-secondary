@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celumusa Secondary School</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --clay:   #1A4F8A;   /* deep royal blue — primary accent */
+    --amber:  #3B82C4;   /* mid blue — hover/secondary accent */
+    --cream:  #F4F8FF;   /* white-blue tint — page background */
+    --ink:    #0D1F3C;   /* navy ink — text & dark panels */
+    --gold:   #5BA3E0;   /* sky blue — highlights on dark */
+    --forest: #0F3460;   /* dark navy — dark section bg */
+    --sand:   #B8D4EE;   /* pale blue — muted text on dark */
+    --smoke:  #E8F1FA;   /* very light blue — light section bg */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: .4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: var(--ink);
+    border-bottom: 2px solid var(--clay);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: .1em;
+    color: var(--cream);
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--sand);
+    text-decoration: none;
+    font-size: .8rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--ink);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 5rem 4rem 5rem 3rem;
+    position: relative;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute; right: -1px; top: 0; bottom: 0;
+    width: 3px; background: var(--clay);
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: .75rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 2rem;
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: .92;
+    color: var(--cream);
+    margin-bottom: 2.5rem;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--amber);
+  }
+  .hero-sub {
+    color: var(--sand);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 380px;
+    margin-bottom: 3rem;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: .75rem;
+    background: var(--clay);
+    color: var(--cream);
+    padding: 1rem 2.2rem;
+    border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .25s, transform .2s;
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: var(--amber); transform: translateY(-2px); }
+  .btn-primary svg { transition: transform .2s; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+
+  .hero-right {
+    position: relative;
+    background: var(--forest);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 5rem 3rem;
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: 'CSS';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18rem;
+    color: rgba(255,255,255,.04);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -.02em;
+  }
+
+  .stat-stack {
+    display: flex; flex-direction: column; gap: 1.5rem;
+    width: 100%; max-width: 340px;
+    position: relative; z-index: 1;
+  }
+  .stat-card {
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 1.75rem 2rem;
+    background: rgba(255,255,255,.04);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: baseline; gap: 1rem;
+    transition: border-color .25s, transform .25s;
+    cursor: default;
+  }
+  .stat-card:hover { border-color: var(--gold); transform: translateX(6px); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { color: var(--sand); font-size: .85rem; line-height: 1.4; }
+
+  /* ── MARQUEE BAND ── */
+  .marquee-band {
+    background: var(--clay);
+    padding: .7rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee-track {
+    display: flex; gap: 4rem;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: .15em;
+    color: var(--cream);
+  }
+  .marquee-track span.dot { color: var(--amber); }
+  @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+  /* ── ABOUT ── */
+  .about {
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+    gap: 0;
+  }
+  .about-accent {
+    background: var(--amber);
+    padding: 6rem 3.5rem;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .about-accent::after {
+    content: '';
+    position: absolute;
+    bottom: 3rem; right: 3rem;
+    width: 80px; height: 80px;
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+  }
+  .section-label {
+    font-size: .7rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: .65;
+  }
+  .about-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .about-quote em { font-style: italic; }
+  .about-body {
+    background: var(--smoke);
+    padding: 6rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-body p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #1e2e42;
+    margin-bottom: 1.5rem;
+  }
+  .about-body p:last-of-type { margin-bottom: 2.5rem; }
+  .since-badge {
+    display: inline-flex; align-items: center; gap: 1rem;
+    border: 2px solid var(--clay);
+    padding: .65rem 1.5rem;
+    width: fit-content;
+  }
+  .since-badge strong {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--clay);
+    letter-spacing: .1em;
+  }
+  .since-badge span { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: #2a4a6e; }
+
+  /* ── PROGRAMS ── */
+  .programs { padding: 7rem 3rem; background: var(--ink); }
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding-bottom: 1.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    color: var(--cream);
+  }
+  .section-title em { color: var(--amber); font-style: italic; }
+  .view-all {
+    color: var(--sand);
+    text-decoration: none;
+    font-size: .8rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--clay);
+    padding-bottom: 2px;
+    transition: color .2s;
+  }
+  .view-all:hover { color: var(--amber); }
+
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--clay);
+  }
+  .prog-card {
+    background: var(--ink);
+    padding: 2.5rem 2rem;
+    transition: background .25s;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+  .prog-card:hover { background: #081528; }
+  .prog-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .prog-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: .75rem;
+  }
+  .prog-desc {
+    font-size: .9rem;
+    line-height: 1.7;
+    color: #7aa8cc;
+  }
+  .prog-tag {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    border: 1px solid var(--clay);
+    padding: .3rem .8rem;
+  }
+
+  /* ── NEWS ── */
+  .news { padding: 7rem 3rem; background: var(--cream); }
+  .news .section-header { border-color: var(--sand); }
+  .news .section-title { color: var(--ink); }
+  .news .section-title em { color: var(--clay); }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: 5fr 3fr;
+    gap: 2rem;
+  }
+  .news-feature {
+    border: 1px solid var(--sand);
+    padding: 3rem;
+    position: relative;
+    transition: border-color .25s;
+  }
+  .news-feature:hover { border-color: var(--clay); }
+  .news-feature .tag {
+    font-size: .7rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .news-feature h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  .news-feature p {
+    font-size: .95rem;
+    line-height: 1.75;
+    color: #2a4a6e;
+    margin-bottom: 2rem;
+  }
+  .news-date {
+    font-size: .75rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #5a84aa;
+  }
+  .news-sidebar { display: flex; flex-direction: column; gap: 1px; background: var(--sand); }
+  .news-item {
+    background: var(--cream);
+    padding: 1.75rem;
+    transition: background .25s;
+    cursor: default;
+  }
+  .news-item:hover { background: var(--smoke); }
+  .news-item .tag {
+    font-size: .65rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--forest);
+    display: block;
+    margin-bottom: .6rem;
+  }
+  .news-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: .5rem;
+  }
+  .news-item .news-date { color: #5a84aa; font-size: .7rem; }
+
+  /* ── VALUES BAND ── */
+  .values {
+    background: var(--forest);
+    padding: 6rem 3rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .value-item {
+    background: var(--forest);
+    padding: 3rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,.1);
+    transition: background .25s;
+  }
+  .value-item:last-child { border-right: none; }
+  .value-item:hover { background: rgba(255,255,255,.05); }
+  .value-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(255,255,255,.06);
+    line-height: 1;
+    margin-bottom: -.5rem;
+  }
+  .value-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: .75rem;
+  }
+  .value-desc { font-size: .88rem; line-height: 1.7; color: #6a9ac0; }
+
+  /* ── CTA ── */
+  .cta {
+    background: var(--clay);
+    padding: 7rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+  }
+  .cta-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 1.25rem;
+  }
+  .cta-text h2 em { font-style: italic; color: var(--amber); }
+  .cta-text p { color: rgba(250,244,234,.7); font-size: 1rem; line-height: 1.6; max-width: 520px; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: .75rem;
+    border: 2px solid var(--cream);
+    color: var(--cream);
+    padding: 1.1rem 2.5rem;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background .25s, color .25s;
+  }
+  .btn-outline:hover { background: var(--cream); color: var(--clay); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 4rem 3rem 2rem;
+    border-top: 3px solid var(--clay);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+  .footer-brand p { color: #4a6a8a; font-size: .88rem; line-height: 1.7; max-width: 260px; }
+  .footer-col h5 {
+    font-size: .7rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.25rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+  .footer-col a { color: #4a6a8a; text-decoration: none; font-size: .88rem; transition: color .2s; }
+  .footer-col a:hover { color: var(--sand); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.07);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { color: #2a4a6e; font-size: .8rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp .6s .1s both; }
+  .hero-headline { animation: fadeUp .7s .25s both; }
+  .hero-sub      { animation: fadeUp .7s .4s both; }
+  .btn-primary   { animation: fadeUp .7s .55s both; }
+  .stat-stack    { animation: fadeUp .8s .5s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 50vh; }
+    .about { grid-template-columns: 1fr; }
+    .programs-grid { grid-template-columns: 1fr; gap: 1px; }
+    .news-grid { grid-template-columns: 1fr; }
+    .values { grid-template-columns: 1fr 1fr; }
+    .cta { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CEL<span>UMUSA</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programmes</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#" class="btn-primary" style="animation:none; padding:.7rem 1.5rem;">Apply Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Est. KwaZulu-Natal · Shaping Tomorrow</p>
+    <h1 class="hero-headline">
+      Nurturing<br><em>Minds,</em><br>Building<br>Futures.
+    </h1>
+    <p class="hero-sub">
+      Celumusa Secondary School is committed to academic excellence, character formation, and community leadership — equipping every learner to rise.
+    </p>
+    <a href="#programs" class="btn-primary">
+      Explore Programmes
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="stat-stack">
+      <div class="stat-card">
+        <div class="stat-num">1 200<span style="font-size:1.8rem">+</span></div>
+        <div class="stat-label">Enrolled<br>Learners</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">94<span style="font-size:1.8rem">%</span></div>
+        <div class="stat-label">Matric Pass<br>Rate 2024</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">60<span style="font-size:1.8rem">+</span></div>
+        <div class="stat-label">Qualified<br>Educators</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Academic Excellence</span><span class="dot">◆</span>
+    <span>Sports &amp; Culture</span><span class="dot">◆</span>
+    <span>STEM Education</span><span class="dot">◆</span>
+    <span>Leadership Development</span><span class="dot">◆</span>
+    <span>Community Upliftment</span><span class="dot">◆</span>
+    <span>Arts &amp; Performance</span><span class="dot">◆</span>
+    <span>Academic Excellence</span><span class="dot">◆</span>
+    <span>Sports &amp; Culture</span><span class="dot">◆</span>
+    <span>STEM Education</span><span class="dot">◆</span>
+    <span>Leadership Development</span><span class="dot">◆</span>
+    <span>Community Upliftment</span><span class="dot">◆</span>
+    <span>Arts &amp; Performance</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-accent">
+    <p class="section-label">Who We Are</p>
+    <h2 class="about-quote">Where <em>every learner</em> finds their voice.</h2>
+  </div>
+  <div class="about-body">
+    <p>
+      Celumusa Secondary School stands as a beacon of education in KwaZulu-Natal, offering a holistic learning environment that honours each learner's potential. We believe that true education reaches beyond the classroom — it shapes character, builds resilience, and ignites a lifelong love of learning.
+    </p>
+    <p>
+      Our dedicated staff, modern facilities, and vibrant school culture work together to create an atmosphere where learners thrive academically, socially, and spiritually. We are proud of our heritage and ambitious about our future.
+    </p>
+    <div class="since-badge">
+      <strong>CELUMUSA</strong>
+      <span>Serving Our Community<br>with Pride &amp; Purpose</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMMES -->
+<section class="programs" id="programs">
+  <div class="section-header">
+    <h2 class="section-title">Our <em>Programmes</em></h2>
+    <a href="#" class="view-all">View All →</a>
+  </div>
+  <div class="programs-grid">
+    <div class="prog-card">
+      <span class="prog-icon">📐</span>
+      <div class="prog-name">Mathematics &amp; Sciences</div>
+      <p class="prog-desc">Rigorous CAPS-aligned curriculum with hands-on labs, preparing learners for engineering, medicine, and technology careers.</p>
+      <span class="prog-tag">Grades 8–12</span>
+    </div>
+    <div class="prog-card">
+      <span class="prog-icon">📖</span>
+      <div class="prog-name">Languages &amp; Humanities</div>
+      <p class="prog-desc">IsiZulu, English, Afrikaans, History, Geography — building critical thinkers and confident communicators.</p>
+      <span class="prog-tag">Grades 8–12</span>
+    </div>
+    <div class="prog-card">
+      <span class="prog-icon">💼</span>
+      <div class="prog-name">Business Studies</div>
+      <p class="prog-desc">Entrepreneurship, Accounting, and Economics equip learners with real-world financial and business acumen.</p>
+      <span class="prog-tag">Grades 10–12</span>
+    </div>
+    <div class="prog-card">
+      <span class="prog-icon">🎨</span>
+      <div class="prog-name">Creative Arts</div>
+      <p class="prog-desc">Visual arts, drama, and music programmes that celebrate African heritage and foster individual creative expression.</p>
+      <span class="prog-tag">Grades 8–12</span>
+    </div>
+    <div class="prog-card">
+      <span class="prog-icon">⚽</span>
+      <div class="prog-name">Sport &amp; Physical Ed</div>
+      <p class="prog-desc">Football, netball, athletics, and more — developing teamwork, discipline, and physical wellbeing in every learner.</p>
+      <span class="prog-tag">All Grades</span>
+    </div>
+    <div class="prog-card">
+      <span class="prog-icon">🌐</span>
+      <div class="prog-name">Digital Literacy</div>
+      <p class="prog-desc">Computer Science and ICT integration across subjects, ensuring our learners are ready for the digital economy.</p>
+      <span class="prog-tag">Grades 8–12</span>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news" id="news">
+  <div class="section-header">
+    <h2 class="section-title">Latest <em>News</em></h2>
+    <a href="#" class="view-all">All Stories →</a>
+  </div>
+  <div class="news-grid">
+    <div class="news-feature">
+      <span class="tag">Academic · Featured</span>
+      <h3>Class of 2024 Achieves Record 94% Matric Pass Rate</h3>
+      <p>Our Grade 12 learners delivered an outstanding performance in the 2024 National Senior Certificate examinations, with 28 distinctions awarded across Mathematics, Physical Sciences, and Languages.</p>
+      <a href="#" class="btn-primary" style="animation:none; display:inline-flex;">
+        Read Story
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="news-sidebar">
+      <div class="news-item">
+        <span class="tag">Sports</span>
+        <h4>U17 Football Team Advances to Regional Finals</h4>
+        <span class="news-date">April 28, 2025</span>
+      </div>
+      <div class="news-item">
+        <span class="tag">Community</span>
+        <h4>Annual Heritage Day Celebration Draws 500+ Guests</h4>
+        <span class="news-date">April 15, 2025</span>
+      </div>
+      <div class="news-item">
+        <span class="tag">Academics</span>
+        <h4>New Science Laboratory Opens for Grade 11 &amp; 12</h4>
+        <span class="news-date">March 22, 2025</span>
+      </div>
+      <div class="news-item">
+        <span class="tag">Awards</span>
+        <h4>Three Learners Win Provincial Maths Olympiad Medals</h4>
+        <span class="news-date">March 10, 2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="value-item">
+    <div class="value-num">01</div>
+    <div class="value-name">Ubuntu</div>
+    <p class="value-desc">We believe in the strength of community — that our learners rise together, never alone.</p>
+  </div>
+  <div class="value-item">
+    <div class="value-num">02</div>
+    <div class="value-name">Excellence</div>
+    <p class="value-desc">We set high standards and support every learner to reach and exceed them.</p>
+  </div>
+  <div class="value-item">
+    <div class="value-num">03</div>
+    <div class="value-name">Integrity</div>
+    <p class="value-desc">Honesty and accountability are the foundation of our school culture and character.</p>
+  </div>
+  <div class="value-item">
+    <div class="value-num">04</div>
+    <div class="value-name">Resilience</div>
+    <p class="value-desc">We nurture the grit and determination to overcome challenges and grow stronger.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-text">
+    <h2>Ready to <em>Join</em><br>the Celumusa Family?</h2>
+    <p>Applications for the 2026 academic year are now open. Give your child the foundation they deserve — enrol at Celumusa Secondary School today.</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:1rem; align-items:flex-end;">
+    <a href="#" class="btn-outline">Apply for 2026</a>
+    <a href="#" class="btn-outline" style="border-color:rgba(250,244,234,.3);">Contact Us</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo">CEL<span>UMUSA</span></span>
+      <p>Celumusa Secondary School — nurturing minds, building futures, and uplifting our community in KwaZulu-Natal.</p>
+    </div>
+    <div class="footer-col">
+      <h5>School</h5>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Staff</a></li>
+        <li><a href="#">Facilities</a></li>
+        <li><a href="#">Governing Body</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Learners</h5>
+      <ul>
+        <li><a href="#">Timetable</a></li>
+        <li><a href="#">Results</a></li>
+        <li><a href="#">Library</a></li>
+        <li><a href="#">Clubs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="#">📍 KwaZulu-Natal</a></li>
+        <li><a href="#">📞 Call the Office</a></li>
+        <li><a href="#">✉ Send Email</a></li>
+        <li><a href="#">Apply Now</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Celumusa Secondary School. All rights reserved.</p>
+    <p style="color:#1a3a5e;">Designed with ♥ for our learners &amp; community.</p>
+  </div>
+</footer>
+
+</body>
+</html>
