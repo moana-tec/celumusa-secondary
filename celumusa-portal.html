@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learner Results — Celumusa Secondary School</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1a2744;--navy2:#0f1a32;
+  --gold:#f5c800;--gold2:#ffd700;--gold3:#c9a800;
+  --light:#f8f6f0;--white:#fff;--muted:#666;--border:#e0ddd5;
+}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--light);min-height:100vh}
+header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
+.hdr{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px}
+.hdr-logo{display:flex;align-items:center;gap:12px}
+.hdr-emblem{width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--navy)}
+.hdr-name{color:#fff;font-size:14px;font-weight:700;line-height:1.2}
+.hdr-name span{color:rgba(255,255,255,.45);font-size:10px;font-weight:400;display:block}
+.hdr-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.moana-badge{color:var(--gold);font-size:11px;font-style:italic}
+.back-btn{background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:7px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;text-decoration:none;transition:.2s}
+.back-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+#loginPage{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 62px);padding:24px}
+.login-box{background:#fff;border-radius:20px;border:1.5px solid var(--border);overflow:hidden;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.1)}
+.login-head{background:var(--navy);padding:32px 28px;text-align:center;border-bottom:4px solid var(--gold)}
+.login-icon{width:68px;height:68px;background:rgba(245,200,0,.15);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--gold);margin:0 auto 14px}
+.login-head h2{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
+.login-head p{color:rgba(255,255,255,.45);font-size:11px}
+.login-body{padding:28px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px}
+.field input{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;outline:none;transition:.2s;background:#fafafa}
+.field input:focus{border-color:var(--gold);background:#fff}
+.login-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+.login-btn:hover{background:var(--navy2)}
+.err{background:#fff0f0;border:1px solid #f5c6cb;color:#c0392b;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:16px;display:none;text-align:center}
+.login-note{text-align:center;font-size:10px;color:var(--muted);margin-top:14px}
+.spin{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.demo-hint{background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.4);border-radius:10px;padding:12px 16px;margin-bottom:18px}
+.demo-hint p{font-size:11px;color:var(--navy);font-weight:600;margin-bottom:6px}
+.demo-hint table{width:100%;font-size:11px;border-collapse:collapse}
+.demo-hint td{padding:2px 6px;color:#444}
+.demo-hint td:first-child{font-weight:700;color:var(--navy);white-space:nowrap}
+
+#resultsPage{display:none;padding:32px 24px;max-width:1000px;margin:0 auto}
+.res-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.res-topbar h2{font-size:20px;font-weight:800;color:var(--navy)}
+.topbar-btns{display:flex;gap:8px;flex-wrap:wrap}
+.signout{background:none;border:1.5px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600}
+.signout:hover{border-color:var(--navy);color:var(--navy)}
+.print-btn{background:var(--navy);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px}
+.print-btn:hover{background:var(--navy2)}
+
+.learner-card{background:var(--navy);border-radius:16px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;border-left:5px solid var(--gold)}
+.lav{width:54px;height:54px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:18px;font-weight:900;flex-shrink:0}
+.linfo h3{color:#fff;font-size:18px;font-weight:700}
+.linfo p{color:rgba(255,255,255,.5);font-size:12px;margin-top:2px}
+.ltags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ltag{background:rgba(245,200,0,.15);border:1px solid rgba(245,200,0,.3);color:var(--gold);padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600}
+
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:18px}
+.sum-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.sum-val{font-size:22px;font-weight:800;color:var(--navy)}
+.sum-lbl{font-size:9px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.4px}
+
+.progress-box{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px}
+.progress-box h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.chart-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.chart-row:last-child{margin-bottom:0}
+.chart-subj{min-width:140px;font-size:11px;font-weight:700;color:var(--navy)}
+.chart-bars{flex:1;display:flex;flex-direction:column;gap:3px}
+.bar-wrap{display:flex;align-items:center;gap:6px}
+.bar-label{font-size:9px;color:var(--muted);width:40px;text-align:right}
+.bar-track{flex:1;background:var(--light);border-radius:20px;height:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:20px;transition:width .6s ease}
+.bar-t1{background:#1565c0}
+.bar-t2{background:#2e7d32}
+.bar-pct{font-size:10px;font-weight:700;color:var(--muted);width:34px}
+.chart-legend{display:flex;gap:16px;margin-bottom:12px}
+.cleg{display:flex;align-items:center;gap:5px;font-size:10px;color:#444}
+.cleg-dot{width:12px;height:12px;border-radius:50%}
+
+.legend{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:18px}
+.legend h4{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.legend-items{display:flex;flex-wrap:wrap;gap:6px}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:#444}
+.leg-dot{width:28px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700}
+
+.term-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.ttab{padding:9px 22px;border-radius:22px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:700;cursor:pointer;color:var(--muted);transition:.15s}
+.ttab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ttab.locked{opacity:.4;cursor:not-allowed}
+.ttab .soon{font-size:9px;background:var(--gold);color:var(--navy);padding:2px 5px;border-radius:8px;margin-left:4px;font-weight:700}
+
+.res-table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;border:1.5px solid var(--border);margin-bottom:18px}
+.res-table thead tr{background:var(--navy)}
+.res-table thead th{color:#fff;padding:12px 16px;text-align:left;font-size:12px;font-weight:700;letter-spacing:.3px}
+.res-table thead th:nth-child(3),.res-table thead th:nth-child(4),.res-table thead th:nth-child(5){text-align:center}
+.res-table tbody tr{border-bottom:1px solid var(--border)}
+.res-table tbody tr:last-child{border-bottom:none}
+.res-table tbody td{padding:12px 16px;font-size:13px;vertical-align:middle}
+.res-table tbody td:nth-child(3),.res-table tbody td:nth-child(4),.res-table tbody td:nth-child(5){text-align:center}
+.avg-row{background:var(--light)}
+.avg-row td{font-weight:700;color:var(--navy)}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700}
+.b7{background:#1a237e;color:#fff}.b6{background:#1565c0;color:#fff}
+.b5{background:#2e7d32;color:#fff}.b4{background:#f57f17;color:#fff}
+.b3{background:#e65100;color:#fff}.b2{background:#b71c1c;color:#fff}
+.b1{background:#4a0000;color:#fff}
+
+.comments-box{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:22px;margin-bottom:18px}
+.box-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.c-row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.c-row:last-child{border-bottom:none;padding-bottom:0}
+.c-subj{min-width:140px;font-size:12px;font-weight:700;color:var(--navy);padding-top:2px}
+.c-teacher{font-size:10px;color:var(--muted);margin-top:2px}
+.c-text{font-size:13px;color:#333;line-height:1.6;flex:1}
+
+.rec-box{background:var(--navy);border-radius:14px;padding:22px;border:2px solid var(--gold);margin-bottom:18px}
+.rec-box h3{color:var(--gold);font-size:13px;font-weight:700;margin-bottom:14px;text-transform:uppercase;letter-spacing:.6px}
+.rec-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.rec-item:last-child{margin-bottom:0}
+.rec-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;margin-top:5px;flex-shrink:0}
+.rec-text{font-size:13px;color:rgba(255,255,255,.85);line-height:1.6}
+.rec-subj{color:var(--gold);font-weight:700}
+
+.footer-note{text-align:center;font-size:11px;color:var(--muted);padding:20px 0 32px}
+
+@media print{
+  header .hdr-right{display:none}
+  .res-topbar .topbar-btns{display:none}
+  .term-tabs{display:none}
+  .rec-box{border:2px solid #ccc;background:#f9f9f9}
+  .rec-box h3,.rec-text,.rec-subj{color:#222!important}
+  .rec-dot{background:#555}
+  .learner-card{background:#1a2744!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  #loginPage{display:none!important}
+  #resultsPage{display:block!important;padding:0}
+  .print-watermark{display:block!important}
+}
+.print-watermark{display:none;text-align:center;font-size:10px;color:#999;margin-top:8px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div class="hdr-logo">
+      <div class="hdr-emblem">CS</div>
+      <div class="hdr-name">Celumusa Secondary School<span>Learner Results Portal</span></div>
+    </div>
+    <div class="hdr-right">
+      <span class="moana-badge">Powered by Moana Technologies</span>
+      <a href="index.html" class="back-btn">← Back to Website</a>
+    </div>
+  </div>
+</header>
+
+<!-- LOGIN -->
+<div id="loginPage">
+  <div class="login-box">
+    <div class="login-head">
+      <div class="login-icon">CS</div>
+      <h2>Celumusa Secondary School</h2>
+      <p>KwaZulu-Natal · Learner Results Portal</p>
+    </div>
+    <div class="login-body">
+      <div class="demo-hint">
+        <p>🎓 Demo Learner IDs — Try any of these:</p>
+        <table>
+          <tr><td>CEL001</td><td>Grade 10 · Siyanda Mkhize</td><td>pw: cel001</td></tr>
+          <tr><td>CEL002</td><td>Grade 11 · Nompilo Dlamini</td><td>pw: cel002</td></tr>
+          <tr><td>CEL003</td><td>Grade 12 · Bongani Zulu</td><td>pw: cel003</td></tr>
+          <tr><td>CEL004</td><td>Grade 8 · Thandeka Ntuli</td><td>pw: cel004</td></tr>
+          <tr><td>CEL005</td><td>Grade 9 · Sipho Khumalo</td><td>pw: cel005</td></tr>
+          <tr><td>CEL006</td><td>Grade 12 · Lungisa Mbatha</td><td>pw: cel006</td></tr>
+          <tr><td>CEL007</td><td>Grade 11 · Ayanda Gumede</td><td>pw: cel007</td></tr>
+          <tr><td>CEL008</td><td>Grade 8 · Zanele Nxumalo</td><td>pw: cel008</td></tr>
+        </table>
+      </div>
+      <div class="err" id="errMsg">Incorrect Learner ID or password. Please try again.</div>
+      <div class="field"><label>Learner ID</label><input type="text" id="lid" placeholder="e.g. CEL001" autocomplete="off"/></div>
+      <div class="field"><label>Password</label><input type="password" id="lpw" placeholder="Enter your password"/></div>
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">
+        <span id="btnTxt">Sign In to View Results</span>
+        <div class="spin" id="spin"></div>
+      </button>
+      <p class="login-note">🔒 Your results are secured by Moana Technologies</p>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="resultsPage">
+  <div class="res-topbar">
+    <h2>📋 Learner Results</h2>
+    <div class="topbar-btns">
+      <button class="print-btn" onclick="window.print()">🖨️ Print Results</button>
+      <button class="signout" onclick="doSignOut()">← Sign Out</button>
+    </div>
+  </div>
+
+  <div class="learner-card">
+    <div class="lav" id="resAv">?</div>
+    <div class="linfo">
+      <h3 id="resName">Learner</h3>
+      <p>Celumusa Secondary School · KwaZulu-Natal</p>
+      <div class="ltags">
+        <span class="ltag" id="resGrade"></span>
+        <span class="ltag" id="resID"></span>
+        <span class="ltag" id="resYear"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sum-grid" id="sumGrid"></div>
+
+  <div class="progress-box" id="progressBox">
+    <h4>📈 Term Progress — Term 1 vs Term 2</h4>
+    <div class="chart-legend">
+      <div class="cleg"><div class="cleg-dot" style="background:#1565c0"></div>Term 1</div>
+      <div class="cleg"><div class="cleg-dot" style="background:#2e7d32"></div>Term 2</div>
+    </div>
+    <div id="progressChart"></div>
+  </div>
+
+  <div class="legend">
+    <h4>NSC Level of Achievement</h4>
+    <div class="legend-items">
+      <div class="leg"><div class="leg-dot" style="background:#1a237e">7</div>80–100% Outstanding</div>
+      <div class="leg"><div class="leg-dot" style="background:#1565c0">6</div>70–79% Meritorious</div>
+      <div class="leg"><div class="leg-dot" style="background:#2e7d32">5</div>60–69% Substantial</div>
+      <div class="leg"><div class="leg-dot" style="background:#f57f17">4</div>50–59% Adequate</div>
+      <div class="leg"><div class="leg-dot" style="background:#e65100">3</div>40–49% Moderate</div>
+      <div class="leg"><div class="leg-dot" style="background:#b71c1c">2</div>30–39% Elementary</div>
+      <div class="leg"><div class="leg-dot" style="background:#4a0000">1</div>0–29% Not Achieved</div>
+    </div>
+  </div>
+
+  <div class="term-tabs" id="termTabs"></div>
+
+  <table class="res-table">
+    <thead><tr><th>Subject</th><th>Teacher</th><th>Mark (%)</th><th>Level</th><th>Achievement</th></tr></thead>
+    <tbody id="resBody"></tbody>
+  </table>
+
+  <div class="comments-box">
+    <div class="box-title" id="commentsTitle">💬 Teacher Comments</div>
+    <div id="commentsBody"></div>
+  </div>
+
+  <div class="rec-box">
+    <h3>⭐ Personalised Improvement Recommendations</h3>
+    <div id="recBody"></div>
+  </div>
+
+  <div class="print-watermark">Printed from Celumusa Secondary School Learner Portal · Powered by Moana Technologies</div>
+  <div class="footer-note">Results secured by Moana Technologies · Celumusa Secondary School · KwaZulu-Natal</div>
+</div>
+
+<script>
+const STUDENTS=[
+
+  // ── GRADE 10 ──
+  {id:'CEL001',pw:'cel001',name:'Siyanda Mkhize',grade:'Grade 10',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:68,comment:'Good algebraic foundation. Trigonometry needs more focused revision.',rec:'Practise 5 trig problems daily. Use the Moana Maths Grade 10 worksheet pack.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:72,comment:'Essay structure is solid. Comprehension answers need more textual evidence.',rec:'Always quote from the text when answering comprehension — evidence earns marks.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:81,comment:'Excellent home language performance. Creative writing is vivid and expressive.',rec:'Enter the school IsiZulu creative writing competition — your talent deserves it.'},
+      {name:'Physical Sciences',teacher:'Mr. K. Mthethwa',mark:64,comment:'Chemistry concepts are good. Physics equations need more practice.',rec:'Write out each physics formula with a worked example — this builds memory fast.'},
+      {name:'Life Sciences',teacher:'Ms. N. Zulu',mark:70,comment:'Good understanding of cell biology. Ecology diagrams need more labelling.',rec:'Practise drawing and labelling diagrams from memory — this is key in exams.'},
+      {name:'History',teacher:'Mr. A. Ntuli',mark:66,comment:'Source analysis is developing. Essay arguments need stronger evidence.',rec:'Use the SMELL method for sources: Source, Message, Emphasis, Language, Limitations.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:73,comment:'Trigonometry has improved greatly. Functions are the next challenge.',rec:'Focus on sketching functions — practice 3 graphs per day from the Moana pack.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:76,comment:'Textual evidence is now consistent. Essay introductions are strong.',rec:'Work on your essay conclusions — end with a powerful statement, not a summary.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:84,comment:'Outstanding creative writing. Oral presentation was confident and expressive.',rec:'Challenge yourself with longer written pieces — you are ready for that level.'},
+      {name:'Physical Sciences',teacher:'Mr. K. Mthethwa',mark:69,comment:'Physics equations are more confidently applied. Keep practising.',rec:'Always show your working — method marks are available even if the answer is wrong.'},
+      {name:'Life Sciences',teacher:'Ms. N. Zulu',mark:74,comment:'Diagrams are much more detailed. Ecology answers show real understanding.',rec:'Now focus on linking concepts — examiners reward learners who connect ideas.'},
+      {name:'History',teacher:'Mr. A. Ntuli',mark:71,comment:'SMELL method is showing in source analysis. Essay arguments are stronger.',rec:'Now focus on your conclusion — a strong ending lifts the whole essay mark.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 11 ──
+  {id:'CEL002',pw:'cel002',name:'Nompilo Dlamini',grade:'Grade 11',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:55,comment:'Calculus introduction is challenging. Linear functions are well understood.',rec:'Spend 20 minutes daily on calculus basics — take it one rule at a time.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:69,comment:'Language use is good. Literature essay analysis needs deeper interpretation.',rec:'Ask: What does this reveal about the character or theme? Go beyond the surface.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:76,comment:'Strong written work. Comprehension responses are detailed and accurate.',rec:'Focus on poetry analysis — identify the tone and mood first, then devices.'},
+      {name:'Accounting',teacher:'Ms. F. Nzama',mark:61,comment:'Basic entries are correct. Reconciliation statements need more attention.',rec:'Practise bank reconciliation statements daily — work through past paper examples.'},
+      {name:'Business Studies',teacher:'Mr. T. Mhlongo',mark:65,comment:'Good understanding of business environments. Case study responses need structure.',rec:'Use PEST analysis for every case study — it gives your answer instant structure.'},
+      {name:'Economics',teacher:'Ms. P. Mbatha',mark:59,comment:'Micro-economics concepts are clear. Macro-economics needs more revision.',rec:'Draw supply and demand diagrams for every macro concept — visuals help retention.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:61,comment:'Calculus is progressing well with consistent effort. Keep going.',rec:'Do not skip practice — even 15 minutes daily makes a significant difference.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:73,comment:'Literature analysis has improved. Interpretations are now more insightful.',rec:'Read the set work twice before writing — the second reading reveals deeper meaning.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:79,comment:'Poetry analysis is developing well. Written expression remains a real strength.',rec:'Work on identifying irony and symbolism — these carry the most marks in poetry.'},
+      {name:'Accounting',teacher:'Ms. F. Nzama',mark:67,comment:'Reconciliation statements are much improved. Cash flow is the next focus.',rec:'Work through one cash flow statement per day from the Moana Accounting pack.'},
+      {name:'Business Studies',teacher:'Mr. T. Mhlongo',mark:70,comment:'PEST analysis is consistently applied. Case study responses are well-structured.',rec:'Now add real South African business examples to your answers — it impresses markers.'},
+      {name:'Economics',teacher:'Ms. P. Mbatha',mark:64,comment:'Macro-economics is improving. Diagram usage is much more consistent.',rec:'Learn the difference between a shift and a movement along a curve — it is tested often.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 12 ──
+  {id:'CEL003',pw:'cel003',name:'Bongani Zulu',grade:'Grade 12',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:78,comment:'Strong performance across all topics. Statistics needs slight revision.',rec:'Revise regression and correlation — these carry easy marks in Paper 3.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:74,comment:'Excellent essay writing. Unseen poetry interpretation needs more confidence.',rec:'Practise one unseen poem per week — focus on tone, mood, and poetic devices.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:82,comment:'Outstanding matric-level performance. Written and oral work are both excellent.',rec:'Maintain this standard — you are on track for a distinction in IsiZulu.'},
+      {name:'Physical Sciences',teacher:'Mr. K. Mthethwa',mark:71,comment:'Good grasp of both Chemistry and Physics. Organic chemistry needs revision.',rec:'Make reaction summary cards for each organic reaction — they are heavily tested.'},
+      {name:'Life Sciences',teacher:'Ms. N. Zulu',mark:76,comment:'Evolution and genetics are strong. Human reproduction needs more detail.',rec:'Draw and label every diagram in the human reproduction section — detail earns marks.'},
+      {name:'Geography',teacher:'Ms. R. Dlamini',mark:69,comment:'Map work is excellent. Climate and atmosphere theory needs more revision.',rec:'Create a summary table of all climate types — compare causes, characteristics, effects.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:83,comment:'Excellent preparation. Statistics revision is clearly paying off.',rec:'Focus on exam technique — show all working and manage your time carefully.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:78,comment:'Unseen poetry is now handled with confidence. A strong overall performance.',rec:'In the exam, spend 5 minutes planning every essay before writing — it shows.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:86,comment:'Distinction-level performance. One of the top IsiZulu learners in Grade 12.',rec:'You are ready — focus on exam conditions practice in the weeks before finals.'},
+      {name:'Physical Sciences',teacher:'Mr. K. Mthethwa',mark:75,comment:'Organic chemistry reactions are now well memorised. Strong term overall.',rec:'Practise full past papers under timed conditions — time management is critical.'},
+      {name:'Life Sciences',teacher:'Ms. N. Zulu',mark:80,comment:'Human reproduction detail has improved significantly. Great effort this term.',rec:'You are on track for a distinction — keep this revision intensity into Term 3.'},
+      {name:'Geography',teacher:'Ms. R. Dlamini',mark:74,comment:'Climate theory is now well understood. Map interpretation remains excellent.',rec:'Practise 1:50 000 topographic map questions weekly — they always appear in the exam.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 8 ──
+  {id:'CEL004',pw:'cel004',name:'Thandeka Ntuli',grade:'Grade 8',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:62,comment:'Good number sense from primary school. Algebra introduction needs practice.',rec:'Practise substitution and simplification daily — these are the building blocks of algebra.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:67,comment:'Good reading comprehension. Paragraph writing needs more structure.',rec:'Use the topic sentence → supporting detail → concluding sentence structure every time.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:79,comment:'Strong home language foundation. A smooth transition from primary school.',rec:'Keep writing in IsiZulu at home — your natural fluency is a real asset.'},
+      {name:'Natural Sciences',teacher:'Mr. K. Mthethwa',mark:65,comment:'Good curiosity and participation. Written answers need more scientific language.',rec:'Learn 5 science words per week and use them in your answers — vocabulary earns marks.'},
+      {name:'Social Sciences',teacher:'Ms. F. Nzama',mark:70,comment:'Good historical understanding. Geography map work is particularly strong.',rec:'Always include dates and specific facts in history answers — vague answers lose marks.'},
+      {name:'Technology',teacher:'Mr. A. Ntuli',mark:73,comment:'Creative designs and good practical skills. A strong start to Grade 8.',rec:'Always explain your design choices in writing — the reasoning earns marks too.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:68,comment:'Algebra is progressing well. Linear equations are now confidently solved.',rec:'Move on to simultaneous equations — the Moana Grade 8 pack has a full section.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:71,comment:'Paragraph structure has improved. Essay introductions are developing well.',rec:'Write one full essay per week under timed conditions — exam readiness starts now.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:82,comment:'Consistently excellent. One of the top IsiZulu performers in Grade 8.',rec:'Challenge yourself with longer essays — your command of the language is impressive.'},
+      {name:'Natural Sciences',teacher:'Mr. K. Mthethwa',mark:69,comment:'Scientific vocabulary is growing. Experiment reports are more detailed.',rec:'Always include a conclusion in your experiment report — it is worth marks on its own.'},
+      {name:'Social Sciences',teacher:'Ms. F. Nzama',mark:74,comment:'History answers now include specific facts and dates. Good improvement.',rec:'For geography, practise sketching and labelling maps from memory.'},
+      {name:'Technology',teacher:'Mr. A. Ntuli',mark:76,comment:'Written explanations of design process are much improved this term.',rec:'Start building a design portfolio — collect all your best work in one place.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 9 ──
+  {id:'CEL005',pw:'cel005',name:'Sipho Khumalo',grade:'Grade 9',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:45,comment:'Foundational gaps in algebra are affecting progress. Targeted support needed.',rec:'Spend 20 minutes daily on algebraic equations — use the Moana Grade 9 pack.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:53,comment:'Reading comprehension is at grade level. Essay writing needs significant work.',rec:'Use PEEL: Point, Evidence, Explain, Link — practise one paragraph every day.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:71,comment:'Strong oral skills. Written work needs to match the quality of spoken IsiZulu.',rec:'Speak your answer aloud first — then write exactly what you said.'},
+      {name:'Natural Sciences',teacher:'Mr. K. Mthethwa',mark:50,comment:'Shows interest but written answers lack scientific terminology.',rec:'Learn the key terms for each topic before the lesson — use the Moana glossary.'},
+      {name:'Social Sciences',teacher:'Ms. F. Nzama',mark:56,comment:'History knowledge is good but analysis is weak. Geography is stronger.',rec:'For every historical fact, ask yourself WHY it happened — analysis earns the marks.'},
+      {name:'EMS',teacher:'Ms. P. Mbatha',mark:49,comment:'Basic business concepts are understood. Application to scenarios is weak.',rec:'Look at shop receipts at home — identify costs, revenue, and profit in real life.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:52,comment:'Algebra is improving with daily practice. Geometry is the next challenge.',rec:'Do not miss a single practice session — consistency is what closes the gap.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:59,comment:'PEEL structure is now visible in written work. Real improvement this term.',rec:'Focus on your introduction — a strong opening paragraph sets the tone for the essay.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:75,comment:'Written IsiZulu has improved significantly. Oral remains a genuine strength.',rec:'Enter the school IsiZulu speech competition — your voice deserves that platform.'},
+      {name:'Natural Sciences',teacher:'Mr. K. Mthethwa',mark:55,comment:'Scientific language is growing. Keep connecting terms to observations.',rec:'After every experiment, write a 3-sentence reflection using science vocabulary.'},
+      {name:'Social Sciences',teacher:'Ms. F. Nzama',mark:62,comment:'Analysis is developing. The WHY approach is showing in essay responses.',rec:'Keep asking WHY — your answers are getting stronger each time.'},
+      {name:'EMS',teacher:'Ms. P. Mbatha',mark:55,comment:'Real-world application is improving. Financial literacy concepts are clearer.',rec:'Create a simple weekly budget for your school expenses — make EMS real.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 12 (second learner) ──
+  {id:'CEL006',pw:'cel006',name:'Lungisa Mbatha',grade:'Grade 12',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:42,comment:'Algebra and functions need urgent attention. Past papers are essential now.',rec:'Do one past paper per week under exam conditions — identify your weak areas.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:58,comment:'Written expression is developing. Comprehension accuracy needs improvement.',rec:'Read every question twice before answering — accuracy starts with reading carefully.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:73,comment:'IsiZulu is a clear strength. Use this confidence to push in other subjects.',rec:'Maintain your IsiZulu standard — a distinction here can carry your overall result.'},
+      {name:'Accounting',teacher:'Ms. F. Nzama',mark:55,comment:'Year-end adjustments are understood. Financial statements need more practice.',rec:'Work through one complete set of financial statements per week — cover to cover.'},
+      {name:'Business Studies',teacher:'Mr. T. Mhlongo',mark:61,comment:'Business concepts are well understood. Exam technique needs refinement.',rec:'Study the mark allocation — never write a paragraph for a 2-mark question.'},
+      {name:'Economics',teacher:'Ms. P. Mbatha',mark:50,comment:'Core concepts are understood. Extended writing responses need more development.',rec:'For 8-mark questions, plan your answer first — introduction, 3 points, conclusion.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:49,comment:'Past paper practice is showing results. Focus on answerable questions in the exam.',rec:'In the exam, do the questions you know first — confidence builds momentum.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:63,comment:'Comprehension accuracy has improved. Essay responses are more organised.',rec:'You are close to passing English strongly — one more focused push will get you there.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:77,comment:'Distinction is within reach. Continue with the same level of dedication.',rec:'Practise past IsiZulu papers under timed conditions — exam readiness is everything now.'},
+      {name:'Accounting',teacher:'Ms. F. Nzama',mark:61,comment:'Financial statements are much improved. Cash flow is the remaining challenge.',rec:'Master cash flow statements — they appear in every matric Accounting paper.'},
+      {name:'Business Studies',teacher:'Mr. T. Mhlongo',mark:66,comment:'Mark-allocation awareness is showing in answers. Good improvement.',rec:'Revise all legislation sections — they are always tested in the final exam.'},
+      {name:'Economics',teacher:'Ms. P. Mbatha',mark:57,comment:'Extended responses are developing. Introduction and conclusion structure is better.',rec:'You are nearly at 60% — this is achievable. Keep practising extended responses.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 11 (second learner) ──
+  {id:'CEL007',pw:'cel007',name:'Ayanda Gumede',grade:'Grade 11',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:88,comment:'Exceptional mathematical ability. A natural problem-solver.',rec:'Explore Grade 12 topics — you are ahead of the Grade 11 curriculum.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:82,comment:'Sophisticated written voice and excellent literary analysis.',rec:'Enter the regional English essay competition — your writing is ready for that stage.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:85,comment:'Outstanding in all areas. One of the strongest IsiZulu learners in Grade 11.',rec:'Write a short play or poem in IsiZulu — your mastery of the language is special.'},
+      {name:'Physical Sciences',teacher:'Mr. K. Mthethwa',mark:84,comment:'Exceptional scientific reasoning across both Chemistry and Physics.',rec:'Enter the regional science olympiad — your analytical skills are at that level.'},
+      {name:'Accounting',teacher:'Ms. F. Nzama',mark:80,comment:'Financial statements are accurate and well-presented. A pleasure to mark.',rec:'Start practising Grade 12 Accounting topics — you are more than ready.'},
+      {name:'Economics',teacher:'Ms. P. Mbatha',mark:79,comment:'Macro and micro-economics are both well understood. Excellent term.',rec:'Read South African business news weekly — it makes your Economics answers richer.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:91,comment:'Near-perfect performance. Consistently the top Mathematics learner in Grade 11.',rec:'Enter the Mathematics Olympiad — your talent deserves a national platform.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:85,comment:'Award-worthy essays. Consistently the strongest English performer in the grade.',rec:'Start a personal blog or journal — your writing voice is powerful and unique.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:88,comment:'A role model for every learner in IsiZulu. Truly exceptional this term.',rec:'Mentor a younger learner in IsiZulu — teaching is the highest form of mastery.'},
+      {name:'Physical Sciences',teacher:'Mr. K. Mthethwa',mark:87,comment:'Best Physical Sciences result in the grade. A future engineer or scientist.',rec:'Research university application requirements — your marks are already competitive.'},
+      {name:'Accounting',teacher:'Ms. F. Nzama',mark:83,comment:'Consistently excellent. Financial concepts are applied with real understanding.',rec:'You are on track for a distinction in Accounting — maintain this standard.'},
+      {name:'Economics',teacher:'Ms. P. Mbatha',mark:82,comment:'Excellent analysis in both micro and macro sections. A standout performance.',rec:'You are ready for matric-level Economics — keep reading and stay curious.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+
+  // ── GRADE 8 (second learner) ──
+  {id:'CEL008',pw:'cel008',name:'Zanele Nxumalo',grade:'Grade 8',year:'2025',terms:{
+    'Term 1':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:36,comment:'Struggling with algebraic expressions. Times tables need to be consolidated.',rec:'Practise times tables for 10 minutes every morning — this underpins all of algebra.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:43,comment:'Reading is below grade level. Paragraph structure needs significant work.',rec:'Read for 15 minutes every night — any book or magazine — just read every day.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:65,comment:'Home language is your strength — use this confidence to grow elsewhere.',rec:'Try explaining other subjects to yourself in IsiZulu — it helps understanding.'},
+      {name:'Natural Sciences',teacher:'Mr. K. Mthethwa',mark:40,comment:'Shows interest in class. Written answers are too brief.',rec:'Write at least 2 sentences for every answer — never leave a one-word response.'},
+      {name:'Social Sciences',teacher:'Ms. F. Nzama',mark:47,comment:'Shows effort in class. Map work and history facts need more revision.',rec:'Draw a simple map of your school surroundings — make geography real and personal.'},
+      {name:'Technology',teacher:'Mr. A. Ntuli',mark:62,comment:'Creative practical work. Written design explanations need more detail.',rec:'For every design choice, write one sentence explaining WHY you made it.'},
+    ]},
+    'Term 2':{released:true,subjects:[
+      {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:43,comment:'Times tables are more solid. Algebraic expressions are improving.',rec:'You are making real progress — do not stop now. Consistency is everything.'},
+      {name:'English FAL',teacher:'Ms. T. Dube',mark:49,comment:'Daily reading is showing results. Paragraph structure is developing.',rec:'You are nearly at 50% — one more push and you will be passing English.'},
+      {name:'IsiZulu HL',teacher:'Ms. B. Gumede',mark:69,comment:'IsiZulu continues to be a real strength. Confidence is growing.',rec:'Use your IsiZulu confidence to push yourself in English — the skills transfer.'},
+      {name:'Natural Sciences',teacher:'Mr. K. Mthethwa',mark:46,comment:'Answers are longer and show more thought. Good improvement this term.',rec:'You are nearly at 50% — keep writing full sentences and you will get there.'},
+      {name:'Social Sciences',teacher:'Ms. F. Nzama',mark:52,comment:'Map drawing has improved. History answers include more specific facts.',rec:'You have passed Social Sciences — well done. Now aim for 60% next term.'},
+      {name:'Technology',teacher:'Mr. A. Ntuli',mark:66,comment:'Written explanations are improving. Design work remains creative and neat.',rec:'Keep adding to your design portfolio — your practical talent is a real strength.'},
+    ]},
+    'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
+  }},
+];
+
+function getLevel(m){
+  if(m>=80)return{num:7,label:'Outstanding Achievement',cls:'b7'};
+  if(m>=70)return{num:6,label:'Meritorious Achievement',cls:'b6'};
+  if(m>=60)return{num:5,label:'Substantial Achievement',cls:'b5'};
+  if(m>=50)return{num:4,label:'Adequate Achievement',cls:'b4'};
+  if(m>=40)return{num:3,label:'Moderate Achievement',cls:'b3'};
+  if(m>=30)return{num:2,label:'Elementary Achievement',cls:'b2'};
+  return{num:1,label:'Not Achieved',cls:'b1'};
+}
+function ini(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+
+let cur=null,curTerm=null;
+
+function doLogin(){
+  const id=document.getElementById('lid').value.trim().toUpperCase();
+  const pw=document.getElementById('lpw').value;
+  const err=document.getElementById('errMsg');
+  const btn=document.getElementById('loginBtn');
+  const txt=document.getElementById('btnTxt');
+  const sp=document.getElementById('spin');
+  err.style.display='none';
+  if(!id||!pw){err.textContent='Please enter your Learner ID and password.';err.style.display='block';return}
+  btn.disabled=true;txt.style.display='none';sp.style.display='block';
+  setTimeout(()=>{
+    btn.disabled=false;txt.style.display='block';sp.style.display='none';
+    const st=STUDENTS.find(s=>s.id===id&&s.pw===pw.toLowerCase());
+    if(st){cur=st;showResults();}
+    else{err.textContent='Incorrect Learner ID or password. Please try again.';err.style.display='block';}
+  },700);
+}
+
+function showResults(){
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('resultsPage').style.display='block';
+  document.getElementById('resAv').textContent=ini(cur.name);
+  document.getElementById('resName').textContent=cur.name;
+  document.getElementById('resGrade').textContent=cur.grade;
+  document.getElementById('resID').textContent='ID: '+cur.id;
+  document.getElementById('resYear').textContent=cur.year;
+  const terms=Object.keys(cur.terms);
+  curTerm=terms.find(t=>cur.terms[t].released)||terms[0];
+  document.getElementById('termTabs').innerHTML=terms.map(t=>{
+    const rel=cur.terms[t].released;
+    return`<div class="ttab${t===curTerm?' active':''}${rel?'':' locked'}" onclick="${rel?`switchTerm('${t}',this)`:'alert(\"Results for this term have not been released yet.\")'}">
+      ${t}${rel?'':'<span class="soon">Soon</span>'}
+    </div>`;
+  }).join('');
+  renderProgressChart();
+  renderTerm(curTerm);
+  window.scrollTo(0,0);
+}
+
+function renderProgressChart(){
+  const t1=cur.terms['Term 1'];
+  const t2=cur.terms['Term 2'];
+  if(!t1||!t1.released||!t2||!t2.released){
+    document.getElementById('progressBox').style.display='none';
+    return;
+  }
+  document.getElementById('progressBox').style.display='block';
+  const html=t1.subjects.map(s1=>{
+    const s2=t2.subjects.find(s=>s.name===s1.name);
+    if(!s2)return'';
+    const diff=s2.mark-s1.mark;
+    const arrow=diff>0?`<span style="color:#2e7d32;font-size:10px;font-weight:700">▲${diff}%</span>`:
+                 diff<0?`<span style="color:#c0392b;font-size:10px;font-weight:700">▼${Math.abs(diff)}%</span>`:
+                 `<span style="color:#888;font-size:10px">→</span>`;
+    return`<div class="chart-row">
+      <div class="chart-subj">${s1.name} ${arrow}</div>
+      <div class="chart-bars">
+        <div class="bar-wrap">
+          <div class="bar-label">T1</div>
+          <div class="bar-track"><div class="bar-fill bar-t1" style="width:${s1.mark}%"></div></div>
+          <div class="bar-pct">${s1.mark}%</div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label">T2</div>
+          <div class="bar-track"><div class="bar-fill bar-t2" style="width:${s2.mark}%"></div></div>
+          <div class="bar-pct">${s2.mark}%</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('progressChart').innerHTML=html;
+}
+
+function switchTerm(t,el){
+  document.querySelectorAll('.ttab').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  curTerm=t;renderTerm(t);
+}
+
+function renderTerm(term){
+  const subs=cur.terms[term].subjects;
+  document.getElementById('commentsTitle').textContent=`💬 Teacher Comments — ${term}`;
+  if(!subs||!subs.length){
+    document.getElementById('sumGrid').innerHTML='';
+    document.getElementById('resBody').innerHTML=`<tr><td colspan="5" style="text-align:center;padding:28px;color:var(--muted);font-size:13px">Results for ${term} have not been released yet.</td></tr>`;
+    document.getElementById('commentsBody').innerHTML='<p style="color:var(--muted);font-size:13px;padding:8px 0">Comments will appear once results are released.</p>';
+    document.getElementById('recBody').innerHTML='<div class="rec-item"><div class="rec-dot"></div><div class="rec-text">Recommendations will appear once results are released.</div></div>';
+    return;
+  }
+  const avg=Math.round(subs.reduce((a,s)=>a+s.mark,0)/subs.length);
+  const hi=subs.reduce((a,s)=>s.mark>a.mark?s:a);
+  const lo=subs.reduce((a,s)=>s.mark<a.mark?s:a);
+  const avgLvl=getLevel(avg);
+  document.getElementById('sumGrid').innerHTML=`
+    <div class="sum-card"><div class="sum-val">${avg}%</div><div class="sum-lbl">Average</div></div>
+    <div class="sum-card"><div class="sum-val">Level ${avgLvl.num}</div><div class="sum-lbl">${avgLvl.label}</div></div>
+    <div class="sum-card"><div class="sum-val">${subs.filter(s=>s.mark>=50).length}/${subs.length}</div><div class="sum-lbl">Passed</div></div>
+    <div class="sum-card"><div class="sum-val">${hi.mark}%</div><div class="sum-lbl">Best: ${hi.name.split(' ')[0]}</div></div>
+    <div class="sum-card"><div class="sum-val">${lo.mark}%</div><div class="sum-lbl">Needs Work</div></div>`;
+  document.getElementById('resBody').innerHTML=
+    subs.map(s=>{const l=getLevel(s.mark);return`<tr>
+      <td><strong>${s.name}</strong></td>
+      <td style="color:var(--muted);font-size:12px">${s.teacher}</td>
+      <td><strong>${s.mark}%</strong></td>
+      <td><span class="badge ${l.cls}">Level ${l.num}</span></td>
+      <td style="font-size:11px;font-weight:600;color:#444">${l.label}</td>
+    </tr>`}).join('')+
+    `<tr class="avg-row"><td colspan="2"><strong>Overall Average</strong></td>
+    <td><strong>${avg}%</strong></td>
+    <td><span class="badge ${avgLvl.cls}">Level ${avgLvl.num}</span></td>
+    <td style="font-size:11px;font-weight:600;color:#444">${avgLvl.label}</td></tr>`;
+  document.getElementById('commentsBody').innerHTML=subs.map(s=>`
+    <div class="c-row">
+      <div class="c-subj">${s.name}<div class="c-teacher">${s.teacher}</div></div>
+      <div class="c-text">${s.comment}</div>
+    </div>`).join('');
+  const recs=subs.filter(s=>s.mark<60).sort((a,b)=>a.mark-b.mark);
+  const show=recs.length?recs:subs.sort((a,b)=>b.mark-a.mark).slice(0,3);
+  document.getElementById('recBody').innerHTML=show.map(s=>{const l=getLevel(s.mark);return`
+    <div class="rec-item"><div class="rec-dot"></div>
+    <div class="rec-text"><span class="rec-subj">${s.name} — Level ${l.num} (${s.mark}%):</span> ${s.rec}</div>
+    </div>`}).join('');
+}
+
+function doSignOut(){
+  cur=null;curTerm=null;
+  document.getElementById('lid').value='';
+  document.getElementById('lpw').value='';
+  document.getElementById('errMsg').style.display='none';
+  document.getElementById('resultsPage').style.display='none';
+  document.getElementById('loginPage').style.display='flex';
+  window.scrollTo(0,0);
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+
+window.addEventListener('load',()=>{
+  const params=new URLSearchParams(window.location.search);
+  const id=params.get('id');
+  const pw=params.get('pw');
+  if(id&&pw){
+    const st=STUDENTS.find(s=>s.id===id.toUpperCase()&&s.pw===pw.toLowerCase());
+    if(st){cur=st;showResults();}
+  }
+});
+</script>
+</body>
+</html>
