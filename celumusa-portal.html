@@ -8,8 +8,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --navy:#1a2744;--navy2:#0f1a32;
-  --gold:#f5c800;--gold2:#ffd700;--gold3:#c9a800;
-  --light:#f8f6f0;--white:#fff;--muted:#666;--border:#e0ddd5;
+  --gold:#f5c800;
+  --light:#f8f6f0;--muted:#666;--border:#e0ddd5;
 }
 body{font-family:'Segoe UI',Arial,sans-serif;background:var(--light);min-height:100vh}
 header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
@@ -18,15 +18,15 @@ header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
 .hdr-emblem{width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--navy)}
 .hdr-name{color:#fff;font-size:14px;font-weight:700;line-height:1.2}
 .hdr-name span{color:rgba(255,255,255,.45);font-size:10px;font-weight:400;display:block}
-.hdr-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.moana-badge{color:var(--gold);font-size:11px;font-style:italic}
+.hdr-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.moana-text{color:var(--gold);font-size:11px;font-weight:600;font-style:italic}
 .back-btn{background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:7px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;text-decoration:none;transition:.2s}
 .back-btn:hover{border-color:var(--gold);color:var(--gold)}
 
 #loginPage{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 62px);padding:24px}
-.login-box{background:#fff;border-radius:20px;border:1.5px solid var(--border);overflow:hidden;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.1)}
+.login-box{background:#fff;border-radius:20px;border:1.5px solid var(--border);overflow:hidden;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,.1)}
 .login-head{background:var(--navy);padding:32px 28px;text-align:center;border-bottom:4px solid var(--gold)}
-.login-icon{width:68px;height:68px;background:rgba(245,200,0,.15);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--gold);margin:0 auto 14px}
+.login-icon{width:68px;height:68px;background:rgba(245,200,0,.15);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:var(--gold);margin:0 auto 14px}
 .login-head h2{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
 .login-head p{color:rgba(255,255,255,.45);font-size:11px}
 .login-body{padding:28px}
@@ -40,12 +40,6 @@ header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
 .login-note{text-align:center;font-size:10px;color:var(--muted);margin-top:14px}
 .spin{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-.demo-hint{background:rgba(245,200,0,.1);border:1px solid rgba(245,200,0,.4);border-radius:10px;padding:12px 16px;margin-bottom:18px}
-.demo-hint p{font-size:11px;color:var(--navy);font-weight:600;margin-bottom:6px}
-.demo-hint table{width:100%;font-size:11px;border-collapse:collapse}
-.demo-hint td{padding:2px 6px;color:#444}
-.demo-hint td:first-child{font-weight:700;color:var(--navy);white-space:nowrap}
 
 #resultsPage{display:none;padding:32px 24px;max-width:1000px;margin:0 auto}
 .res-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
@@ -156,13 +150,12 @@ header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
       <div class="hdr-name">Celumusa Secondary School<span>Learner Results Portal</span></div>
     </div>
     <div class="hdr-right">
-      <span class="moana-badge">Powered by Moana Technologies</span>
+      <span class="moana-text">Powered by Moana Technologies</span>
       <a href="index.html" class="back-btn">← Back to Website</a>
     </div>
   </div>
 </header>
 
-<!-- LOGIN -->
 <div id="loginPage">
   <div class="login-box">
     <div class="login-head">
@@ -171,21 +164,8 @@ header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
       <p>KwaZulu-Natal · Learner Results Portal</p>
     </div>
     <div class="login-body">
-      <div class="demo-hint">
-        <p>🎓 Demo Learner IDs — Try any of these:</p>
-        <table>
-          <tr><td>CEL001</td><td>Grade 10 · Siyanda Mkhize</td><td>pw: cel001</td></tr>
-          <tr><td>CEL002</td><td>Grade 11 · Nompilo Dlamini</td><td>pw: cel002</td></tr>
-          <tr><td>CEL003</td><td>Grade 12 · Bongani Zulu</td><td>pw: cel003</td></tr>
-          <tr><td>CEL004</td><td>Grade 8 · Thandeka Ntuli</td><td>pw: cel004</td></tr>
-          <tr><td>CEL005</td><td>Grade 9 · Sipho Khumalo</td><td>pw: cel005</td></tr>
-          <tr><td>CEL006</td><td>Grade 12 · Lungisa Mbatha</td><td>pw: cel006</td></tr>
-          <tr><td>CEL007</td><td>Grade 11 · Ayanda Gumede</td><td>pw: cel007</td></tr>
-          <tr><td>CEL008</td><td>Grade 8 · Zanele Nxumalo</td><td>pw: cel008</td></tr>
-        </table>
-      </div>
       <div class="err" id="errMsg">Incorrect Learner ID or password. Please try again.</div>
-      <div class="field"><label>Learner ID</label><input type="text" id="lid" placeholder="e.g. CEL001" autocomplete="off"/></div>
+      <div class="field"><label>Learner ID</label><input type="text" id="lid" placeholder="Enter your Learner ID" autocomplete="off"/></div>
       <div class="field"><label>Password</label><input type="password" id="lpw" placeholder="Enter your password"/></div>
       <button class="login-btn" id="loginBtn" onclick="doLogin()">
         <span id="btnTxt">Sign In to View Results</span>
@@ -196,7 +176,6 @@ header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
   </div>
 </div>
 
-<!-- RESULTS -->
 <div id="resultsPage">
   <div class="res-topbar">
     <h2>📋 Learner Results</h2>
@@ -261,13 +240,11 @@ header{background:var(--navy);border-bottom:4px solid var(--gold);padding:0}
   </div>
 
   <div class="print-watermark">Printed from Celumusa Secondary School Learner Portal · Powered by Moana Technologies</div>
-  <div class="footer-note">Results secured by Moana Technologies · Celumusa Secondary School · KwaZulu-Natal</div>
+  <div class="footer-note">Powered by Moana Technologies · Celumusa Secondary School · KwaZulu-Natal</div>
 </div>
 
 <script>
 const STUDENTS=[
-
-  // ── GRADE 10 ──
   {id:'CEL001',pw:'cel001',name:'Siyanda Mkhize',grade:'Grade 10',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:68,comment:'Good algebraic foundation. Trigonometry needs more focused revision.',rec:'Practise 5 trig problems daily. Use the Moana Maths Grade 10 worksheet pack.'},
@@ -287,8 +264,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 11 ──
   {id:'CEL002',pw:'cel002',name:'Nompilo Dlamini',grade:'Grade 11',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:55,comment:'Calculus introduction is challenging. Linear functions are well understood.',rec:'Spend 20 minutes daily on calculus basics — take it one rule at a time.'},
@@ -308,8 +283,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 12 ──
   {id:'CEL003',pw:'cel003',name:'Bongani Zulu',grade:'Grade 12',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:78,comment:'Strong performance across all topics. Statistics needs slight revision.',rec:'Revise regression and correlation — these carry easy marks in Paper 3.'},
@@ -329,8 +302,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 8 ──
   {id:'CEL004',pw:'cel004',name:'Thandeka Ntuli',grade:'Grade 8',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:62,comment:'Good number sense from primary school. Algebra introduction needs practice.',rec:'Practise substitution and simplification daily — these are the building blocks of algebra.'},
@@ -350,8 +321,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 9 ──
   {id:'CEL005',pw:'cel005',name:'Sipho Khumalo',grade:'Grade 9',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:45,comment:'Foundational gaps in algebra are affecting progress. Targeted support needed.',rec:'Spend 20 minutes daily on algebraic equations — use the Moana Grade 9 pack.'},
@@ -371,8 +340,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 12 (second learner) ──
   {id:'CEL006',pw:'cel006',name:'Lungisa Mbatha',grade:'Grade 12',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:42,comment:'Algebra and functions need urgent attention. Past papers are essential now.',rec:'Do one past paper per week under exam conditions — identify your weak areas.'},
@@ -392,8 +359,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 11 (second learner) ──
   {id:'CEL007',pw:'cel007',name:'Ayanda Gumede',grade:'Grade 11',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:88,comment:'Exceptional mathematical ability. A natural problem-solver.',rec:'Explore Grade 12 topics — you are ahead of the Grade 11 curriculum.'},
@@ -413,8 +378,6 @@ const STUDENTS=[
     ]},
     'Term 3':{released:false,subjects:[]},'Term 4':{released:false,subjects:[]},
   }},
-
-  // ── GRADE 8 (second learner) ──
   {id:'CEL008',pw:'cel008',name:'Zanele Nxumalo',grade:'Grade 8',year:'2025',terms:{
     'Term 1':{released:true,subjects:[
       {name:'Mathematics',teacher:'Mr. S. Ndlovu',mark:36,comment:'Struggling with algebraic expressions. Times tables need to be consolidated.',rec:'Practise times tables for 10 minutes every morning — this underpins all of algebra.'},
@@ -457,7 +420,7 @@ function doLogin(){
   const txt=document.getElementById('btnTxt');
   const sp=document.getElementById('spin');
   err.style.display='none';
-  if(!id||!pw){err.textContent='Please enter your Learner ID and password.';err.style.display='block';return}
+  if(!id||!pw){err.textContent='Please enter your Learner ID and password.';err.style.display='block';return;}
   btn.disabled=true;txt.style.display='none';sp.style.display='block';
   setTimeout(()=>{
     btn.disabled=false;txt.style.display='block';sp.style.display='none';
@@ -479,7 +442,7 @@ function showResults(){
   curTerm=terms.find(t=>cur.terms[t].released)||terms[0];
   document.getElementById('termTabs').innerHTML=terms.map(t=>{
     const rel=cur.terms[t].released;
-    return`<div class="ttab${t===curTerm?' active':''}${rel?'':' locked'}" onclick="${rel?`switchTerm('${t}',this)`:'alert(\"Results for this term have not been released yet.\")'}">
+    return`<div class="ttab${t===curTerm?' active':''}${rel?'':' locked'}" onclick="${rel?`switchTerm('${t}',this)`:'alert(\'Results for this term have not been released yet.\')'}">
       ${t}${rel?'':'<span class="soon">Soon</span>'}
     </div>`;
   }).join('');
@@ -491,10 +454,7 @@ function showResults(){
 function renderProgressChart(){
   const t1=cur.terms['Term 1'];
   const t2=cur.terms['Term 2'];
-  if(!t1||!t1.released||!t2||!t2.released){
-    document.getElementById('progressBox').style.display='none';
-    return;
-  }
+  if(!t1||!t1.released||!t2||!t2.released){document.getElementById('progressBox').style.display='none';return;}
   document.getElementById('progressBox').style.display='block';
   const html=t1.subjects.map(s1=>{
     const s2=t2.subjects.find(s=>s.name===s1.name);
@@ -506,16 +466,8 @@ function renderProgressChart(){
     return`<div class="chart-row">
       <div class="chart-subj">${s1.name} ${arrow}</div>
       <div class="chart-bars">
-        <div class="bar-wrap">
-          <div class="bar-label">T1</div>
-          <div class="bar-track"><div class="bar-fill bar-t1" style="width:${s1.mark}%"></div></div>
-          <div class="bar-pct">${s1.mark}%</div>
-        </div>
-        <div class="bar-wrap">
-          <div class="bar-label">T2</div>
-          <div class="bar-track"><div class="bar-fill bar-t2" style="width:${s2.mark}%"></div></div>
-          <div class="bar-pct">${s2.mark}%</div>
-        </div>
+        <div class="bar-wrap"><div class="bar-label">T1</div><div class="bar-track"><div class="bar-fill bar-t1" style="width:${s1.mark}%"></div></div><div class="bar-pct">${s1.mark}%</div></div>
+        <div class="bar-wrap"><div class="bar-label">T2</div><div class="bar-track"><div class="bar-fill bar-t2" style="width:${s2.mark}%"></div></div><div class="bar-pct">${s2.mark}%</div></div>
       </div>
     </div>`;
   }).join('');
@@ -583,7 +535,7 @@ function doSignOut(){
   window.scrollTo(0,0);
 }
 
-document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
 window.addEventListener('load',()=>{
   const params=new URLSearchParams(window.location.search);
